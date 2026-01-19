@@ -9,11 +9,11 @@ Du brauchst **keine** Programmierkenntnisse. Claude macht alles für dich.
 
 **Demo ansehen:** [demo-website.cdu-digital-template.levinkeller.de](https://demo-website.cdu-digital-template.levinkeller.de)
 
-## 1. Repository forken
+## 1. Repository kopieren
 
-Geh auf [github.com/levino/cdu-digital-template](https://github.com/levino/cdu-digital-template) und klick oben rechts auf **Fork**.
+Geh auf [github.com/levino/cdu-digital-template](https://github.com/levino/cdu-digital-template) und klick oben rechts auf **Use this template** → **Create a new repository**.
 
-Wähl deinen GitHub-Account als Ziel.
+Gib deinem Repository einen Namen (z.B. `cdu-neustadt-website`) und klick auf **Create repository**.
 
 ## 2. Claude Code installieren
 
