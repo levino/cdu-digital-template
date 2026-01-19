@@ -83,7 +83,9 @@ Das Template ist für **Cloudflare Pages** vorbereitet:
 
 Fertig! Deine Seite ist online.
 
-Für die interne Dokumentation (optional) eine zweite Page anlegen mit Root directory: `docs`.
+:::note
+Der `docs/` Ordner enthält eine interne Dokumentation (z.B. für Briefe). Kann man ignorieren oder später einrichten - nur für Fortgeschrittene.
+:::
 
 ## 7. Aufräumen
 
