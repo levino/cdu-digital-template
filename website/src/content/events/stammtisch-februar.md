@@ -1,6 +1,6 @@
 ---
 title: "Politischer Stammtisch"
-date: 2025-02-20T19:30:00
+date: 2026-02-19T19:30:00
 location: "Gasthaus Zur Eiche"
 address: "Am Markt 5, 12345 Musterstadt"
 description: "Offener Stammtisch für alle Interessierten"

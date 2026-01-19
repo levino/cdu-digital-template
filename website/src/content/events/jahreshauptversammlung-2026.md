@@ -1,6 +1,6 @@
 ---
-title: "Jahreshauptversammlung 2025"
-date: 2025-03-15T19:00:00
+title: "Jahreshauptversammlung 2026"
+date: 2026-03-14T19:00:00
 location: "Bürgerhaus Musterstadt"
 address: "Hauptstraße 10, 12345 Musterstadt"
 description: "Ordentliche Jahreshauptversammlung mit Vorstandswahlen"
@@ -8,7 +8,7 @@ status: upcoming
 organizer: "CDU Gemeindeverband Musterstadt"
 ---
 
-Herzliche Einladung zur Jahreshauptversammlung 2025!
+Herzliche Einladung zur Jahreshauptversammlung 2026!
 
 ## Tagesordnung
 

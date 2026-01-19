@@ -5,6 +5,7 @@
   "description": "Template für CDU Gemeinde- und Ortsverband Webseiten",
   "workspaces": [
     "website",
+    "docs",
     "briefvorlagen"
   ],
   "license": "UNLICENSED",

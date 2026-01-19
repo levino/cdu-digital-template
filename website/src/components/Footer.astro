@@ -1,12 +1,6 @@
 ---
 const currentYear = new Date().getFullYear();
 
-// TODO: Eigene Ortsverbände eintragen
-const ortsVerbaende = [
-  { name: 'CDU Ortsteil A', href: '#' },
-  { name: 'CDU Ortsteil B', href: '#' },
-];
-
 const links = [
   { name: 'CDU Niedersachsen', href: 'https://cdu-niedersachsen.de' },
   { name: 'CDU Deutschland', href: 'https://cdu.de' },
@@ -15,7 +9,7 @@ const links = [
 
 <footer class="bg-rhoendorf text-white py-16">
   <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Kontakt -->
       <div>
         <p class="font-sans font-bold text-xl mb-4">Kontakt</p>
@@ -28,25 +22,6 @@ const links = [
           Tel: <a href="tel:+4912345678" class="hover:text-cadenabbia transition-colors">01234 / 5678</a><br />
           E-Mail: <a href="mailto:info@cdu-musterstadt.de" class="hover:text-cadenabbia transition-colors">info@cdu-musterstadt.de</a>
         </address>
-      </div>
-
-      <!-- Ortsverbände -->
-      <div>
-        <p class="font-sans font-bold text-xl mb-4">Ortsverbände</p>
-        <ul class="space-y-2">
-          {ortsVerbaende.map(ov => (
-            <li>
-              <a
-                href={ov.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover:text-cadenabbia transition-colors"
-              >
-                {ov.name}
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
 
       <!-- Links -->

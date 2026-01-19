@@ -51,6 +51,17 @@ const news = defineCollection({
     }),
 });
 
+// Berichte collection
+const berichte = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/berichte" }),
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    gremium: z.enum(["Gemeinderat", "Kreistag", "Ausschuss"]),
+    excerpt: z.string(),
+  }),
+});
+
 // Events collection
 const events = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/events" }),
@@ -73,4 +84,5 @@ export const collections = {
   "fraktion-kreistag": fraktionKreistag,
   news,
   events,
+  berichte,
 };

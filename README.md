@@ -19,7 +19,7 @@ Eine moderne, mobilfreundliche Website-Vorlage für CDU Gemeinde- und Ortsverbä
 - Fraktion (Gemeinde & Kreistag)
 - Aktuelles (News)
 - Termine (Events)
-- Einladungen
+- Berichte (aus Gemeinderat/Kreistag)
 - Kontakt
 - Impressum
 
@@ -29,9 +29,30 @@ Eine moderne, mobilfreundliche Website-Vorlage für CDU Gemeinde- und Ortsverbä
 
 Klicke auf **"Use this template"** oben rechts, um ein eigenes Repository zu erstellen.
 
-### 2. Inhalte mit KI anpassen
+### 2. Claude in GitHub aktivieren (optional aber empfohlen)
 
-Öffne dein Repository mit [Claude Code](https://claude.ai/code) und sage der KI was du ändern möchtest:
+Die Claude GitHub Action ist bereits vorkonfiguriert. Um sie zu nutzen:
+
+1. Du benötigst ein **Claude Pro/Max/Team Abo** (claude.ai)
+2. Erstelle einen OAuth Token unter [claude.ai/settings/api](https://claude.ai/settings/api)
+3. Füge den Token als Repository Secret hinzu:
+   - Repository → Settings → Secrets and variables → Actions
+   - "New repository secret" → Name: `CLAUDE_CODE_OAUTH_TOKEN` → Value: dein Token
+4. Merge den offenen PR "Add Claude Code GitHub Workflow"
+
+**Wichtig:** Ohne den Token funktioniert die GitHub Action nicht!
+
+Danach kannst du in Issues oder PRs `@claude` erwähnen und Claude arbeitet direkt im Repository:
+
+> "@claude füge einen neuen Termin für die Jahreshauptversammlung am 14. März hinzu"
+
+> "@claude erstelle einen Bericht aus der letzten Gemeinderatssitzung"
+
+**Hinweis:** Die Action läuft mit `--dangerously-skip-permissions`, d.h. Claude kann ohne Nachfragen Dateien ändern. Das ist unbedenklich, da es nur in der isolierten CI-Umgebung läuft – nicht auf deinem Computer.
+
+### 3. Inhalte mit KI anpassen (lokal)
+
+Alternativ öffne dein Repository mit [Claude Code](https://claude.ai/code) lokal und sage der KI was du ändern möchtest:
 
 > "Ändere den Verbandsname zu CDU Musterstadt und aktualisiere die Kontaktdaten im Impressum"
 
@@ -41,7 +62,7 @@ Klicke auf **"Use this template"** oben rechts, um ein eigenes Repository zu ers
 
 Die KI findet automatisch die richtigen Dateien und macht die Änderungen für dich.
 
-### 3. Automatisches Deployment
+### 4. Automatisches Deployment
 
 Verbinde dein Repository mit [Cloudflare Pages](https://pages.cloudflare.com/):
 

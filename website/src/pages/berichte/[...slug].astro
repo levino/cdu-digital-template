@@ -1,0 +1,81 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const allBerichte = await getCollection('berichte');
+  return allBerichte.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const formattedDate = entry.data.date.toLocaleDateString('de-DE', {
+  weekday: 'long',
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+
+function getGremiumColor(gremium: string) {
+  switch (gremium) {
+    case "Gemeinderat":
+      return "badge-primary";
+    case "Kreistag":
+      return "badge-secondary";
+    case "Ausschuss":
+      return "badge-accent";
+    default:
+      return "badge-neutral";
+  }
+}
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.excerpt}>
+  <article class="py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <!-- Back Link -->
+        <a href="/berichte" class="inline-flex items-center gap-2 text-cadenabbia hover:underline font-sans mb-8">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Zurück zur Übersicht
+        </a>
+
+        <!-- Header -->
+        <header class="mb-10">
+          <div class="flex items-center gap-3 mb-4 flex-wrap">
+            <span class={`badge ${getGremiumColor(entry.data.gremium)} font-sans`}>
+              {entry.data.gremium}
+            </span>
+            <time class="text-gray-500 font-sans" datetime={entry.data.date.toISOString()}>
+              {formattedDate}
+            </time>
+          </div>
+          <h1 class="text-3xl lg:text-4xl xl:text-5xl font-bold font-sans text-unionsschwarz leading-tight">
+            {entry.data.title}
+          </h1>
+        </header>
+
+        <!-- Content -->
+        <div class="prose prose-lg max-w-none prose-headings:font-sans prose-headings:text-unionsschwarz prose-a:text-cadenabbia">
+          <Content />
+        </div>
+
+        <!-- Back Link Bottom -->
+        <div class="mt-12 pt-8 border-t border-gray-200">
+          <a href="/berichte" class="inline-flex items-center gap-2 text-cadenabbia hover:underline font-sans">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Alle Berichte anzeigen
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
