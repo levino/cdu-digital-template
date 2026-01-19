@@ -1,6 +1,7 @@
 ---
 title: Willkommen
 description: Internes Handbuch für den CDU Gemeindeverband
+slug: ""
 ---
 
 # Dokumentation
