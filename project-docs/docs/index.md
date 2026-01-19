@@ -67,12 +67,11 @@ Claude lädt sie runter und fügt sie ein.
 ## 5. Online stellen
 
 1. Geh auf [dash.cloudflare.com](https://dash.cloudflare.com)
-2. **Workers & Pages** → **Create application** → **Connect to Git**
-3. Wähl dein Repository
-4. Root directory auf `website` setzen
-5. Deploy
+2. **Workers & Pages** → **Create application**
+3. **Continue with GitHub** → User/Organisation auswählen → Repository auswählen → **Next**
+4. Root directory auf `website` setzen → **Deploy**
 
-Fertig! Deine Seite ist online.
+Fertig!
 
 :::note
 Der `docs/` Ordner enthält eine interne Dokumentation (z.B. für Briefe). Kann man ignorieren oder später einrichten - nur für Fortgeschrittene.
