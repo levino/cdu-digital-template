@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  image?: string;
+  showCta?: boolean;
+}
+
+const { title, subtitle, image, showCta = false } = Astro.props;
+---
+
+<section class="relative bg-rhoendorf text-white py-20 lg:py-32">
+  {image && (
+    <div class="absolute inset-0 overflow-hidden">
+      <img
+        src={image}
+        alt=""
+        class="w-full h-full object-cover opacity-20"
+        loading="eager"
+      />
+    </div>
+  )}
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="max-w-3xl">
+      <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold font-sans mb-6 leading-tight">
+        {title}
+      </h1>
+      {subtitle && (
+        <p class="text-xl lg:text-2xl text-white/90 mb-8">
+          {subtitle}
+        </p>
+      )}
+      {showCta && (
+        <div class="flex flex-wrap gap-4">
+          <a href="/aktuelles" class="btn btn-primary btn-lg font-sans">
+            Aktuelles erfahren
+          </a>
+          <a href="/kontakt" class="btn btn-outline btn-lg text-white border-white hover:bg-white hover:text-rhoendorf font-sans">
+            Kontakt aufnehmen
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

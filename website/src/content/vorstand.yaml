@@ -1,0 +1,11 @@
+- id: "1"
+  person: max-mustermann
+  amt: Vorsitzender
+
+- id: "2"
+  person: erika-musterfrau
+  amt: Stellv. Vorsitzende
+
+- id: "3"
+  person: hans-schmidt
+  amt: Schatzmeister

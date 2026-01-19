@@ -1,0 +1,80 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import EventCard from "../../components/EventCard.astro";
+
+const allEvents = await getCollection("events");
+const now = new Date();
+
+// Nur zukünftige Events (Datum >= heute) und nicht abgesagt
+const upcomingEvents = allEvents
+  .filter((e) => e.data.date >= now && e.data.status !== "cancelled")
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+// Alle vergangenen Events (Datum < heute oder abgesagt)
+const pastEvents = allEvents
+  .filter((e) => e.data.date < now || e.data.status === "cancelled")
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout
+  title="Termine"
+  description="Termine und Veranstaltungen der CDU Musterstadt"
+>
+  <Hero
+    title="Termine"
+    subtitle="Veranstaltungen und Treffen der CDU Musterstadt"
+  />
+
+  <section class="py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+      <!-- Upcoming Events -->
+      <div class="mb-16">
+        <h2
+          class="text-2xl lg:text-3xl font-bold font-sans text-unionsschwarz mb-8"
+        >
+          Kommende Termine
+        </h2>
+        {
+          upcomingEvents.length > 0 ? (
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-4xl">
+              {upcomingEvents.map((event) => (
+                <EventCard
+                  title={event.data.title}
+                  date={event.data.date}
+                  location={event.data.location}
+                  description={event.data.description}
+                  href={`/termine/${event.id}`}
+                />
+              ))}
+            </div>
+          ) : (
+            <p class="text-gray-600">Aktuell keine Termine geplant.</p>
+          )
+        }
+      </div>
+
+      <!-- Past Events -->
+      {
+        pastEvents.length > 0 && (
+          <div>
+            <h2 class="text-2xl lg:text-3xl font-bold font-sans text-unionsschwarz mb-8">
+              Vergangene Termine
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-4xl opacity-60">
+              {pastEvents.map((event) => (
+                <EventCard
+                  title={event.data.title}
+                  date={event.data.date}
+                  location={event.data.location}
+                  href={`/termine/${event.id}`}
+                />
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

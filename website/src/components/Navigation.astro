@@ -1,0 +1,134 @@
+---
+const navItems = [
+  { href: '/', label: 'Start' },
+  { href: '/vorstand', label: 'Vorstand' },
+  { href: '/fraktion/gemeinde', label: 'Fraktion' },
+  { href: '/aktuelles', label: 'Aktuelles' },
+  { href: '/termine', label: 'Termine' },
+  { href: '/einladungen', label: 'Einladungen' },
+  { href: '/kontakt', label: 'Kontakt' },
+];
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  const basePath = '/' + href.split('/')[1];
+  return currentPath.startsWith(basePath);
+}
+---
+
+<header class="bg-cadenabbia sticky top-0 z-50">
+  <div class="container mx-auto px-4">
+    <nav class="flex items-center justify-between py-3 lg:py-2">
+      <!-- Logo - responsive: stacked on mobile, inline on desktop -->
+      <a href="/" class="flex flex-col sm:flex-row sm:items-end">
+        <svg class="h-10 sm:h-12" viewBox="0 0 1039 304" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="CDU">
+          <path d="M1025.92 0.230469H0V294.43H1025.92V0.230469Z" fill="white"/>
+          <path d="M242.04 105.15V247.07H182.42V147.32C190.37 142.75 198.15 137.91 205.74 132.79C207.01 131.94 208.27 131.08 209.52 130.22C210.78 129.35 212.03 128.48 213.27 127.6C214.2 126.94 215.14 126.27 216.06 125.6C218.97 123.52 221.85 121.38 224.69 119.21C225.62 118.49 226.55 117.78 227.47 117.06C227.68 116.9 227.89 116.74 228.09 116.57C229.23 115.68 230.37 114.78 231.5 113.88C232.5 113.08 233.5 112.28 234.49 111.46C234.82 111.21 235.14 110.95 235.46 110.67C236.5 109.82 237.53 108.96 238.56 108.1C239.62 107.21 240.67 106.32 241.72 105.42C241.83 105.34 241.93 105.25 242.04 105.15Z" fill="#FFA600"/>
+          <path d="M172.95 152.58V247.07H113.34V178.48C134.05 171.49 153.97 162.8 172.95 152.58Z" fill="#BF111B"/>
+          <path d="M103.86 181.539V247.069H44.2402V194.899C64.6702 191.989 84.5802 187.499 103.86 181.539Z" fill="#1B191D"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M610.49 90.2003C626.05 90.2003 635.44 92.6303 642.57 98.5003C654.43 108.26 659.26 126.52 656.18 146.72C651.65 176.32 639.14 203.18 597.13 203.18H560.72L578.03 90.2003H610.5H610.49ZM632.42 47.5703C696.02 47.5703 731.51 84.8903 724.57 146.71C717.76 207.35 684.95 247.06 608.67 247.06H486.93L517.51 47.5703H632.41H632.42Z" fill="#1B191D"/>
+          <path d="M831.35 47.5703L814.2 159.45C810.37 184.45 824.17 203.1 850.91 203.1C873.69 203.1 892.88 187.77 897.22 159.44L914.38 47.5703H981.68L965.56 152.68C956.68 210.61 924.37 250.5 846.12 250.5C794.13 250.5 765.29 231.69 752.85 207.45C743.54 189.31 743.12 167.98 745.87 150.08L761.58 47.5703H831.36H831.35Z" fill="#1B191D"/>
+          <path d="M468.929 193.951C458.879 197.061 435.859 199.711 412.939 199.711C361.249 199.711 343.349 175.411 345.259 146.721C347.379 114.771 374.969 92.1906 428.589 92.1906C450.209 92.1906 473.339 97.7406 478.949 99.4906L486.169 52.6006C476.229 49.8106 447.879 44.1406 409.049 44.1406C313.709 44.1406 281.079 96.8406 274.879 135.411C266.149 189.651 300.759 250.521 392.659 250.521C421.939 250.521 451.869 246.181 461.539 241.691L468.929 193.961V193.951Z" fill="#1B191D"/>
+        </svg>
+        <span class="font-sans font-semibold text-base sm:text-xl text-white tracking-wide mt-1 sm:mt-0 sm:ml-3 sm:pb-0.5">MUSTERSTADT</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden lg:flex items-center gap-1">
+        {navItems.map(item => (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                'px-4 py-2 rounded-none font-sans text-base transition-colors',
+                isActive(item.href)
+                  ? 'bg-white/20 text-white font-semibold'
+                  : 'text-white hover:bg-white/10'
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Mobile Menu Button -->
+      <mobile-menu-toggle class="lg:hidden">
+        <button
+          type="button"
+          class="p-2 rounded-none hover:bg-white/10 transition-colors text-white"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          <svg class="w-8 h-8 menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg class="w-8 h-8 close-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </mobile-menu-toggle>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <mobile-menu class="lg:hidden">
+      <ul class="hidden pb-4 space-y-1" id="mobile-nav">
+        {navItems.map(item => (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                'block px-4 py-3 rounded-none font-sans text-base transition-colors',
+                isActive(item.href)
+                  ? 'bg-white/20 text-white font-semibold'
+                  : 'text-white hover:bg-white/10'
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </mobile-menu>
+  </div>
+</header>
+
+<script>
+  // Mobile Menu Toggle Web Component
+  class MobileMenuToggle extends HTMLElement {
+    constructor() {
+      super();
+      this.button = this.querySelector('button');
+      this.menuIcon = this.querySelector('.menu-icon');
+      this.closeIcon = this.querySelector('.close-icon');
+      this.isOpen = false;
+    }
+
+    connectedCallback() {
+      this.button?.addEventListener('click', () => this.toggle());
+    }
+
+    toggle() {
+      this.isOpen = !this.isOpen;
+      this.button?.setAttribute('aria-expanded', String(this.isOpen));
+      this.menuIcon?.classList.toggle('hidden', this.isOpen);
+      this.closeIcon?.classList.toggle('hidden', !this.isOpen);
+
+      const mobileMenu = document.querySelector('mobile-menu ul');
+      mobileMenu?.classList.toggle('hidden', !this.isOpen);
+    }
+  }
+
+  customElements.define('mobile-menu-toggle', MobileMenuToggle);
+
+  // Mobile Menu Web Component
+  class MobileMenu extends HTMLElement {
+    constructor() {
+      super();
+    }
+  }
+
+  customElements.define('mobile-menu', MobileMenu);
+</script>

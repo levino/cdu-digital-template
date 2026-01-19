@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import einladungenData from "../data/einladungen.json";
+
+// Group by year
+const byYear = einladungenData.reduce((acc: Record<string, typeof einladungenData>, item) => {
+  if (!acc[item.year]) acc[item.year] = [];
+  acc[item.year].push(item);
+  return acc;
+}, {} as Record<string, typeof einladungenData>);
+
+const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
+---
+
+<BaseLayout title="Einladungen - CDU Gemeindeverband Musterstadt" description="Einladungen zu Veranstaltungen des CDU Gemeindeverbands Musterstadt">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-rhöndorf mb-2">Einladungen</h1>
+    <p class="text-gray-600 mb-8">Einladungsflyer zu unseren Veranstaltungen.</p>
+
+    {years.map(year => (
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-rhöndorf mb-6 border-b border-cadenabbia pb-2">{year}</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {byYear[year].filter(item => item.image).map(item => (
+            <div class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow">
+              <figure class="relative">
+                <a href={`/einladungen/${item.image}`} target="_blank" class="block">
+                  <img
+                    src={`/einladungen/${item.image}`}
+                    alt={item.event}
+                    class="w-full h-64 object-cover object-top"
+                    loading="lazy"
+                    width="400"
+                    height="256"
+                  />
+                </a>
+              </figure>
+              <div class="card-body p-4">
+                <h3 class="card-title text-sm">{item.event}</h3>
+                <div class="card-actions justify-end mt-2">
+                  <a
+                    href={`/einladungen/${item.image}`}
+                    target="_blank"
+                    class="btn btn-xs btn-outline btn-primary"
+                  >
+                    Bild öffnen
+                  </a>
+                  {item.pdf && (
+                    <a
+                      href={`/einladungen/${item.pdf}`}
+                      target="_blank"
+                      class="btn btn-xs btn-primary"
+                    >
+                      PDF
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

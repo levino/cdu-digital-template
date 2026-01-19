@@ -1,0 +1,41 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import PersonCard from '../components/PersonCard.astro';
+
+const vorstand = await getCollection('vorstand');
+
+const members = await Promise.all(
+  vorstand.map(async ({ data }) => ({
+    person: await getEntry(data.person),
+    amt: data.amt,
+  }))
+);
+---
+
+<BaseLayout title="Vorstand" description="Der Vorstand des CDU Gemeindeverbandes Musterstadt">
+  <Hero
+    title="Vorstand"
+    subtitle="Die Führung des CDU Gemeindeverbandes Musterstadt"
+  />
+
+  <section class="py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {members.map(({ person, amt }) => (
+          <PersonCard
+            firstName={person.data.firstName}
+            lastName={person.data.lastName}
+            amt={amt}
+            email={person.data.email}
+            phone={person.data.phone}
+            address={person.data.address}
+            image={person.data.image}
+            imageUrl={person.data.imageUrl}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

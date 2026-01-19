@@ -1,0 +1,157 @@
+---
+import type { GetStaticPaths, Page } from "astro";
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import NewsCard from "../../components/NewsCard.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const allNews = await getCollection("news");
+
+  const sortedNews = allNews.sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  );
+
+  return paginate(sortedNews, { pageSize: 10 });
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: Page;
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout
+  title={page.currentPage === 1
+    ? "Aktuelles"
+    : `Aktuelles - Seite ${page.currentPage}`}
+  description="Neuigkeiten und Aktuelles von der CDU Musterstadt"
+>
+  <Hero
+    title="Aktuelles"
+    subtitle="Neuigkeiten aus dem CDU Gemeindeverband Musterstadt"
+  />
+
+  <section class="py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+      {
+        page.data.length > 0 ? (
+          <>
+            {/* News Grid */}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {page.data.map((news: any) => (
+                <NewsCard
+                  title={news.data.title}
+                  date={news.data.date}
+                  excerpt={news.data.excerpt}
+                  image={news.data.image}
+                  category={news.data.category}
+                  href={`/aktuelles/${news.id}`}
+                />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {page.lastPage > 1 && (
+              <nav
+                class="flex justify-center items-center gap-2 mt-12 font-sans"
+                aria-label="Seitennavigation"
+              >
+                {page.url.prev ? (
+                  <a
+                    href={page.url.prev}
+                    class="btn btn-outline btn-sm"
+                    aria-label="Vorherige Seite"
+                  >
+                    <svg
+                      class="w-4 h-4 mr-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                    Zurück
+                  </a>
+                ) : (
+                  <span class="btn btn-outline btn-sm btn-disabled">
+                    <svg
+                      class="w-4 h-4 mr-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                    Zurück
+                  </span>
+                )}
+
+                <span class="px-4 text-gray-600">
+                  Seite {page.currentPage} von {page.lastPage}
+                </span>
+
+                {page.url.next ? (
+                  <a
+                    href={page.url.next}
+                    class="btn btn-outline btn-sm"
+                    aria-label="Nächste Seite"
+                  >
+                    Weiter
+                    <svg
+                      class="w-4 h-4 ml-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                ) : (
+                  <span class="btn btn-outline btn-sm btn-disabled">
+                    Weiter
+                    <svg
+                      class="w-4 h-4 ml-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </span>
+                )}
+              </nav>
+            )}
+          </>
+        ) : (
+          <div class="text-center py-12">
+            <p class="text-gray-600 text-lg">
+              Aktuell keine Beiträge vorhanden.
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

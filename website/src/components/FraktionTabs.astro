@@ -1,0 +1,27 @@
+---
+interface Props {
+  active: 'gemeinde' | 'kreistag';
+}
+
+const { active } = Astro.props;
+
+const tabs = [
+  { id: 'gemeinde', label: 'Gemeinderat', href: '/fraktion/gemeinde' },
+  { id: 'kreistag', label: 'Kreistag', href: '/fraktion/kreistag' },
+];
+---
+
+<nav class="fraktion-tabs" role="tablist" aria-label="Fraktion">
+  {tabs.map((tab) => (
+    <a
+      role="tab"
+      href={tab.href}
+      class:list={["fraktion-tab", { "active": tab.id === active }]}
+    >
+      {tab.label}
+      {tab.id === active && (
+        <span class="fraktion-tab-indicator" transition:name="tab-indicator"></span>
+      )}
+    </a>
+  ))}
+</nav>

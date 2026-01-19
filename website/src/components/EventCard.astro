@@ -1,0 +1,49 @@
+---
+interface Props {
+  title: string;
+  date: Date;
+  location: string;
+  description?: string;
+  href?: string;
+  external?: boolean;
+}
+
+const { title, date, location, description, href, external = false } = Astro.props;
+
+const day = date.getDate();
+const month = date.toLocaleDateString('de-DE', { month: 'short' });
+const time = date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+
+const Tag = href ? 'a' : 'article';
+const linkProps = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
+---
+
+<Tag href={href} {...linkProps} class="flex gap-4 p-4 border-l-4 border-cadenabbia bg-base-100 rounded-none shadow hover:shadow-md transition-shadow block">
+  <div class="flex-shrink-0 text-center bg-rhoendorf text-white p-3 rounded-none min-w-[70px]">
+    <div class="text-3xl font-bold font-sans leading-none">{day}</div>
+    <div class="text-sm uppercase font-sans">{month}</div>
+    {time !== '00:00' && (
+      <div class="text-xs mt-1 opacity-80">{time} Uhr</div>
+    )}
+  </div>
+  <div class="flex-1">
+    <div class="flex items-center gap-2 flex-wrap">
+      <h4 class="font-bold text-lg text-unionsschwarz font-sans">{title}</h4>
+      {external && (
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      )}
+    </div>
+    <p class="text-sm text-cadenabbia font-sans flex items-center gap-1 mt-1">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      {location}
+    </p>
+    {description && (
+      <p class="text-sm text-gray-600 mt-2">{description}</p>
+    )}
+  </div>
+</Tag>

@@ -1,0 +1,134 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const gemeindeEvents = await getCollection('events');
+  return gemeindeEvents.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const formattedDate = entry.data.date.toLocaleDateString('de-DE', {
+  weekday: 'long',
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+
+const formattedTime = entry.data.date.toLocaleTimeString('de-DE', {
+  hour: '2-digit',
+  minute: '2-digit',
+});
+
+const hasTime = entry.data.date.getHours() !== 0 || entry.data.date.getMinutes() !== 0;
+
+// Google JSON-LD structured data
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": entry.data.title,
+  "startDate": entry.data.date.toISOString(),
+  "endDate": entry.data.endDate?.toISOString() || entry.data.date.toISOString(),
+  "eventStatus": entry.data.status === 'cancelled'
+    ? "https://schema.org/EventCancelled"
+    : entry.data.status === 'completed'
+    ? "https://schema.org/EventPostponed"
+    : "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": entry.data.location,
+    "address": entry.data.address || entry.data.location
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": entry.data.organizer || "CDU Gemeindeverband Musterstadt",
+    "url": "https://cdu-musterstadt.de"
+  },
+  "description": entry.data.description || entry.data.title
+};
+
+const statusLabel = {
+  upcoming: null,
+  completed: 'Abgeschlossen',
+  cancelled: 'Abgesagt'
+};
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <article class="py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <!-- Back Link -->
+        <a href="/termine" class="inline-flex items-center gap-2 text-cadenabbia hover:underline font-sans mb-8">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Zurück zur Übersicht
+        </a>
+
+        <!-- Header -->
+        <header class="mb-10">
+          <div class="flex items-center gap-3 mb-4 flex-wrap">
+            {statusLabel[entry.data.status] && (
+              <span class={`badge font-sans ${entry.data.status === 'cancelled' ? 'badge-error' : 'badge-neutral'}`}>
+                {statusLabel[entry.data.status]}
+              </span>
+            )}
+          </div>
+          <h1 class="text-3xl lg:text-4xl xl:text-5xl font-bold font-sans text-unionsschwarz leading-tight">
+            {entry.data.title}
+          </h1>
+        </header>
+
+        <!-- Event Details -->
+        <div class="bg-base-200 p-6 mb-10">
+          <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <dt class="text-sm text-gray-500 font-sans">Datum</dt>
+              <dd class="font-semibold font-sans text-unionsschwarz">
+                <time datetime={entry.data.date.toISOString()}>
+                  {formattedDate}
+                </time>
+              </dd>
+            </div>
+            {hasTime && (
+              <div>
+                <dt class="text-sm text-gray-500 font-sans">Uhrzeit</dt>
+                <dd class="font-semibold font-sans text-unionsschwarz">{formattedTime} Uhr</dd>
+              </div>
+            )}
+            <div>
+              <dt class="text-sm text-gray-500 font-sans">Ort</dt>
+              <dd class="font-semibold font-sans text-unionsschwarz">{entry.data.location}</dd>
+            </div>
+            {entry.data.address && (
+              <div>
+                <dt class="text-sm text-gray-500 font-sans">Adresse</dt>
+                <dd class="font-semibold font-sans text-unionsschwarz">{entry.data.address}</dd>
+              </div>
+            )}
+            {entry.data.organizer && (
+              <div>
+                <dt class="text-sm text-gray-500 font-sans">Veranstalter</dt>
+                <dd class="font-semibold font-sans text-unionsschwarz">{entry.data.organizer}</dd>
+              </div>
+            )}
+          </dl>
+        </div>
+
+        <!-- Content -->
+        <div class="prose prose-lg max-w-none prose-headings:font-sans prose-headings:text-unionsschwarz prose-a:text-cadenabbia">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,9 @@
+# TODO: Ersetze "cdu-musterstadt" durch deinen Projektnamen
+name = "cdu-musterstadt"
+compatibility_date = "2026-01-17"
+
+[build]
+command = "npm run build"
+
+[assets]
+directory = "dist"

@@ -1,0 +1,148 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import '@fontsource/ibm-plex-serif/400.css';
+import '@fontsource/ibm-plex-serif/600.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title,
+  description = 'CDU Gemeindeverband Musterstadt - Christlich Demokratische Union',
+  image = '/logo.svg',
+  type = 'website'
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = image.startsWith('http') ? image : new URL(image, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="de" data-theme="cdu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} | CDU Musterstadt`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="CDU Musterstadt" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={`${title} | CDU Musterstadt`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" href="/favicon-192x192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="msapplication-TileImage" content="/mstile-270x270.png" />
+    <title>{title} | CDU Musterstadt</title>
+    <ViewTransitions />
+  </head>
+  <body class="min-h-screen flex flex-col font-serif text-lg text-unionsschwarz bg-base-100">
+    <!-- GitHub Ribbon -->
+    <a href="https://github.com/levino/cdu-digital-template" target="_blank" rel="noopener" style="position: fixed; top: 0; right: 0; z-index: 1000;">
+      <img loading="lazy" decoding="async" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" style="position: absolute; top: 0; right: 0;">
+    </a>
+
+    <!-- Demo Banner -->
+    <div class="bg-rhoendorf text-white text-center py-2 px-4 text-sm font-sans">
+      Dies ist eine <strong>Demo-Website</strong>.
+      <a href="https://github.com/levino/cdu-digital-template" class="underline hover:no-underline" target="_blank" rel="noopener">
+        Template auf GitHub forken
+      </a> und mit <a href="https://claude.ai/code" class="underline hover:no-underline" target="_blank" rel="noopener">Claude Code</a> anpassen!
+    </div>
+
+    <Navigation />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Make markdown tables horizontally scrollable on mobile */
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Fraktion tabs styling */
+  .fraktion-tabs {
+    display: flex;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .fraktion-tab {
+    font-size: 1.25rem;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+    position: relative;
+  }
+
+  .fraktion-tab:hover {
+    color: #52b7c1;
+  }
+
+  .fraktion-tab.active {
+    color: #52b7c1;
+    font-weight: 600;
+  }
+
+  .fraktion-tab-indicator {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #52b7c1;
+  }
+</style>
+
+<script>
+  // Preserve scroll position for fraktion tab navigation
+  let scrollY = 0;
+
+  document.addEventListener('astro:before-preparation', (e) => {
+    const from = e.from.pathname;
+    const to = e.to.pathname;
+    if (from.startsWith('/fraktion/') && to.startsWith('/fraktion/')) {
+      scrollY = window.scrollY;
+    }
+  });
+
+  document.addEventListener('astro:after-swap', () => {
+    if (scrollY > 0 && window.location.pathname.startsWith('/fraktion/')) {
+      window.scrollTo(0, scrollY);
+      scrollY = 0;
+    }
+  });
+</script>

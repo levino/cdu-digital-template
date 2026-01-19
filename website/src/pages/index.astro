@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import NewsCard from '../components/NewsCard.astro';
+import EventCard from '../components/EventCard.astro';
+
+const allNews = await getCollection('news');
+const latestNews = allNews
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const allEvents = await getCollection('events');
+const upcomingEvents = allEvents
+  .filter(e => e.data.date >= new Date())
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+  .slice(0, 3);
+---
+
+<BaseLayout title="Startseite">
+  <Hero
+    title="Willkommen bei der CDU Musterstadt"
+    subtitle="Gemeinsam für unsere Gemeinde. Bürgernah, verantwortungsvoll, zukunftsorientiert."
+    showCta={true}
+  />
+
+  <!-- Aktuelles Section -->
+  <section class="py-16 lg:py-24 bg-base-200">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between mb-10">
+        <h2 class="text-3xl lg:text-4xl font-bold font-sans text-unionsschwarz">
+          Aktuelles
+        </h2>
+        <a href="/aktuelles" class="link link-primary font-sans">
+          Alle Beiträge &rarr;
+        </a>
+      </div>
+
+      {latestNews.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {latestNews.map(news => (
+            <NewsCard
+              title={news.data.title}
+              date={news.data.date}
+              excerpt={news.data.excerpt}
+              image={news.data.image}
+              category={news.data.category}
+              href={`/aktuelles/${news.id.replace('.md', '')}`}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-gray-600">Aktuell keine Neuigkeiten vorhanden.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Termine Section -->
+  <section class="py-16 lg:py-24">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between mb-10">
+        <h2 class="text-3xl lg:text-4xl font-bold font-sans text-unionsschwarz">
+          Kommende Termine
+        </h2>
+        <a href="/termine" class="link link-primary font-sans">
+          Alle Termine &rarr;
+        </a>
+      </div>
+
+      {upcomingEvents.length > 0 ? (
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-4xl">
+          {upcomingEvents.map(event => (
+            <EventCard
+              title={event.data.title}
+              date={event.data.date}
+              location={event.data.location}
+              description={event.data.description}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-gray-600">Aktuell keine Termine geplant.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Ortsverbände Section -->
+  <!-- TODO: Eigene Ortsverbände eintragen oder Section entfernen -->
+  <section class="py-16 lg:py-24 bg-base-200">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl lg:text-4xl font-bold font-sans text-unionsschwarz mb-10 text-center">
+        Unsere Ortsverbände
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+        <a href="#" class="card bg-base-100 shadow hover:shadow-lg transition-shadow text-center p-8 group">
+          <h3 class="text-xl font-bold font-sans text-unionsschwarz group-hover:text-cadenabbia transition-colors">
+            CDU Ortsteil A
+          </h3>
+        </a>
+        <a href="#" class="card bg-base-100 shadow hover:shadow-lg transition-shadow text-center p-8 group">
+          <h3 class="text-xl font-bold font-sans text-unionsschwarz group-hover:text-cadenabbia transition-colors">
+            CDU Ortsteil B
+          </h3>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
