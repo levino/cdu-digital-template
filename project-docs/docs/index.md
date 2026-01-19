@@ -17,11 +17,7 @@ Gib deinem Repository einen Namen (z.B. `cdu-neustadt-website`) und klick auf **
 
 ## 2. GitHub App installieren
 
-Installiere Claude Code falls noch nicht vorhanden:
-
-```bash
-npm install -g @anthropic-ai/claude-code
-```
+Installiere [Claude Code](https://docs.anthropic.com/en/docs/claude-code) falls noch nicht vorhanden.
 
 Dann installiere die GitHub App:
 
