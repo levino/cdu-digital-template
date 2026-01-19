@@ -72,15 +72,24 @@ Claude lädt sie runter und fügt sie ein.
 
 Das Template ist für **Cloudflare Pages** vorbereitet:
 
-1. Geh auf [pages.cloudflare.com](https://pages.cloudflare.com)
-2. "Create a project" → "Connect to Git"
+1. Geh auf [dash.cloudflare.com](https://dash.cloudflare.com)
+2. **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**
 3. Wähl dein Repository
 4. Build settings:
+   - Root directory: `website`
    - Build command: `npm run build`
-   - Build output directory: `website/dist`
+   - Build output directory: `dist`
 5. Deploy
 
 Fertig! Deine Seite ist online.
+
+Für die interne Dokumentation (optional) eine zweite Page anlegen mit Root directory: `docs`.
+
+## 7. Aufräumen
+
+Die `project-docs/` brauchst du nicht - das ist nur die Anleitung die du gerade liest. Sag Claude:
+
+> @claude lösch den project-docs ordner, den brauch ich nicht
 
 ## Weitere Änderungen
 
