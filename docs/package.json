@@ -9,8 +9,8 @@
     "preview": "astro preview --host"
   },
   "dependencies": {
-    "@levino/shipyard-base": "^0.6.2",
-    "@levino/shipyard-docs": "^0.6.2",
+    "@levino/shipyard-base": "^0.6.3-rc-20260113205743",
+    "@levino/shipyard-docs": "^0.6.3-rc-20260113205743",
     "astro": "^5.0.0"
   },
   "devDependencies": {

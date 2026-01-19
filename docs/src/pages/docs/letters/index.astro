@@ -1,0 +1,72 @@
+---
+import Splash from '@levino/shipyard-base/layouts/Splash.astro'
+import { readdirSync } from 'node:fs'
+import { join } from 'node:path'
+
+const lettersDir = join(process.cwd(), 'public/letters')
+
+let pdfs: string[] = []
+try {
+  pdfs = readdirSync(lettersDir)
+    .filter(f => f.endsWith('.pdf'))
+    .sort()
+} catch {
+  // Directory might not exist yet
+}
+
+const formatName = (filename: string) => {
+  return filename
+    .replace('.pdf', '')
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+---
+
+<Splash frontmatter={{ title: 'Briefe' }}>
+  <div class="py-12">
+    <h1 class="text-4xl font-bold mb-6">Briefe</h1>
+    <p class="text-lg mb-8">
+      Generierte Briefe im CDU Corporate Design.
+    </p>
+
+    {pdfs.length > 0 ? (
+      <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>Vorlage</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pdfs.map(pdf => (
+              <tr>
+                <td>{formatName(pdf)}</td>
+                <td>
+                  <a href={`/letters/${pdf}`} class="btn btn-sm btn-primary">
+                    PDF herunterladen
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ) : (
+      <div class="alert alert-info">
+        <span>Keine Briefvorlagen verfügbar.</span>
+      </div>
+    )}
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold mb-4">Eigene Briefe erstellen</h2>
+      <p class="mb-4">
+        Für individuelle Briefe nutzen Sie Claude Code:
+      </p>
+      <div class="mockup-code">
+        <pre><code>"Erstelle einen Brief an den Bürgermeister zum Thema Straßensanierung"</code></pre>
+      </div>
+    </div>
+  </div>
+</Splash>

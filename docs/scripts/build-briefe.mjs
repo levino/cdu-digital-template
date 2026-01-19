@@ -3,7 +3,7 @@ import { readdirSync, mkdirSync, existsSync } from 'node:fs'
 import { join, basename } from 'node:path'
 
 const briefvorlagenDir = join(import.meta.dirname, '../../briefvorlagen')
-const outputDir = join(import.meta.dirname, '../public/downloads')
+const outputDir = join(import.meta.dirname, '../public/letters')
 
 // Ensure output directory exists
 if (!existsSync(outputDir)) {
