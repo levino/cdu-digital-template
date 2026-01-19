@@ -1,0 +1,77 @@
+---
+import Splash from '@levino/shipyard-base/layouts/Splash.astro'
+import { getCollection } from 'astro:content'
+
+const allBerichte = await getCollection('berichte')
+const berichte = allBerichte
+  .filter(b => !b.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('de-DE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
+const getTagBadgeClass = (tag: string) => {
+  const tagClasses: Record<string, string> = {
+    'gemeinderat': 'badge-primary',
+    'kreistag': 'badge-secondary',
+    'vorstand': 'badge-accent',
+    'protokoll': 'badge-info',
+  }
+  return tagClasses[tag] || 'badge-ghost'
+}
+---
+
+<Splash frontmatter={{ title: 'Berichte' }}>
+  <div class="py-12">
+    <h1 class="text-4xl font-bold mb-6">Berichte</h1>
+    <p class="text-lg mb-8">
+      Berichte und Protokolle aus den Gremien des CDU Gemeindeverbands.
+    </p>
+
+    {berichte.length > 0 ? (
+      <div class="space-y-4">
+        {berichte.map(bericht => (
+          <div class="card bg-base-100 shadow-sm border border-base-300">
+            <div class="card-body">
+              <h2 class="card-title">
+                <a href={`/berichte/${bericht.id}`} class="link link-hover">
+                  {bericht.data.title}
+                </a>
+              </h2>
+              <p class="text-sm opacity-70">{formatDate(bericht.data.date)}</p>
+              {bericht.data.description && (
+                <p>{bericht.data.description}</p>
+              )}
+              {bericht.data.tags && (
+                <div class="card-actions">
+                  {bericht.data.tags.map(tag => (
+                    <span class={`badge ${getTagBadgeClass(tag)}`}>{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="alert alert-info">
+        <span>Noch keine Berichte vorhanden.</span>
+      </div>
+    )}
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold mb-4">Neuen Bericht erstellen</h2>
+      <p class="mb-4">
+        Einfach ein <a href="https://github.com/levino/cdu-digital-template/issues/new" class="link link-primary">GitHub Issue</a> anlegen und <code>@claude</code> erwähnen:
+      </p>
+      <blockquote class="border-l-4 border-primary pl-4 italic">
+        @claude schreib einen bericht zur gemeinderatssitzung vom 15. januar, themen waren: haushalt 2026 beschlossen, spielplatzsanierung genehmigt, tempo 30 in der schulstraße umgesetzt
+      </blockquote>
+    </div>
+  </div>
+</Splash>

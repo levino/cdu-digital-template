@@ -8,8 +8,8 @@
     "preview": "astro preview --host"
   },
   "dependencies": {
-    "@levino/shipyard-base": "rc",
-    "@levino/shipyard-docs": "rc",
+    "@levino/shipyard-base": "^0.6.3",
+    "@levino/shipyard-docs": "^0.6.3",
     "astro": "^5.0.0"
   },
   "devDependencies": {

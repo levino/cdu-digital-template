@@ -1,0 +1,76 @@
+---
+import Splash from '@levino/shipyard-base/layouts/Splash.astro'
+import { getCollection } from 'astro:content'
+
+const allAntraege = await getCollection('antraege')
+const antraege = allAntraege
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('de-DE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
+const getStatusBadge = (tags: string[] | undefined) => {
+  if (!tags) return { label: 'Unbekannt', class: 'badge-ghost' }
+  if (tags.includes('beschlossen')) return { label: 'Beschlossen', class: 'badge-success' }
+  if (tags.includes('eingereicht')) return { label: 'Eingereicht', class: 'badge-info' }
+  if (tags.includes('entwurf')) return { label: 'Entwurf', class: 'badge-warning' }
+  return { label: 'Unbekannt', class: 'badge-ghost' }
+}
+---
+
+<Splash frontmatter={{ title: 'Anträge' }}>
+  <div class="py-12">
+    <h1 class="text-4xl font-bold mb-6">Anträge</h1>
+    <p class="text-lg mb-8">
+      Anträge und Beschlussvorlagen der CDU-Fraktion.
+    </p>
+
+    {antraege.length > 0 ? (
+      <div class="space-y-4">
+        {antraege.map(antrag => {
+          const status = getStatusBadge(antrag.data.tags)
+          return (
+            <div class={`card bg-base-100 shadow-sm border border-base-300 ${antrag.data.draft ? 'opacity-70' : ''}`}>
+              <div class="card-body">
+                <div class="flex items-start justify-between">
+                  <h2 class="card-title">
+                    <a href={`/antraege/${antrag.id}`} class="link link-hover">
+                      {antrag.data.title}
+                    </a>
+                  </h2>
+                  <span class={`badge ${status.class}`}>{status.label}</span>
+                </div>
+                <p class="text-sm opacity-70">{formatDate(antrag.data.date)}</p>
+                {antrag.data.description && (
+                  <p>{antrag.data.description}</p>
+                )}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    ) : (
+      <div class="alert alert-info">
+        <span>Noch keine Anträge vorhanden.</span>
+      </div>
+    )}
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold mb-4">Neuen Antrag erstellen</h2>
+      <p class="mb-4">
+        Einfach ein <a href="https://github.com/levino/cdu-digital-template/issues/new" class="link link-primary">GitHub Issue</a> anlegen und <code>@claude</code> erwähnen:
+      </p>
+      <blockquote class="border-l-4 border-primary pl-4 italic">
+        @claude erstell einen antrag zur spielplatzsanierung in der lindenstraße, geräte sind kaputt, kostet ca 45000 euro, soll im frühjahr umgesetzt werden
+      </blockquote>
+      <p class="mt-4 text-sm opacity-70">
+        Claude erstellt einen Pull Request mit dem Antragsentwurf. Im PR können Änderungen vorgeschlagen werden, bevor der Antrag finalisiert wird.
+      </p>
+    </div>
+  </div>
+</Splash>

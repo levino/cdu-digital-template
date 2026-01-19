@@ -1,0 +1,64 @@
+---
+import Splash from '@levino/shipyard-base/layouts/Splash.astro'
+import { getCollection, render } from 'astro:content'
+
+export async function getStaticPaths() {
+  const berichte = await getCollection('berichte')
+  return berichte.map(bericht => ({
+    params: { slug: bericht.id },
+    props: { bericht }
+  }))
+}
+
+const { bericht } = Astro.props
+const { Content } = await render(bericht)
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('de-DE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
+const getTagBadgeClass = (tag: string) => {
+  const tagClasses: Record<string, string> = {
+    'gemeinderat': 'badge-primary',
+    'kreistag': 'badge-secondary',
+    'vorstand': 'badge-accent',
+    'protokoll': 'badge-info',
+  }
+  return tagClasses[tag] || 'badge-ghost'
+}
+---
+
+<Splash frontmatter={{ title: bericht.data.title }}>
+  <div class="py-12">
+    <div class="mb-8">
+      <a href="/berichte" class="link link-primary">&larr; Alle Berichte</a>
+    </div>
+
+    <article class="prose prose-lg max-w-none">
+      <h1>{bericht.data.title}</h1>
+
+      <div class="not-prose flex items-center gap-4 mb-6 text-sm opacity-70">
+        <span>{formatDate(bericht.data.date)}</span>
+        {bericht.data.tags && (
+          <div class="flex gap-2">
+            {bericht.data.tags.map(tag => (
+              <span class={`badge ${getTagBadgeClass(tag)}`}>{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {bericht.data.draft && (
+        <div class="not-prose alert alert-warning mb-6">
+          <span>Entwurf - noch nicht veröffentlicht</span>
+        </div>
+      )}
+
+      <Content />
+    </article>
+  </div>
+</Splash>

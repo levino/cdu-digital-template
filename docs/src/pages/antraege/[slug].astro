@@ -1,0 +1,60 @@
+---
+import Splash from '@levino/shipyard-base/layouts/Splash.astro'
+import { getCollection, render } from 'astro:content'
+
+export async function getStaticPaths() {
+  const antraege = await getCollection('antraege')
+  return antraege.map(antrag => ({
+    params: { slug: antrag.id },
+    props: { antrag }
+  }))
+}
+
+const { antrag } = Astro.props
+const { Content } = await render(antrag)
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('de-DE', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
+const getStatusBadge = (tags: string[] | undefined) => {
+  if (!tags) return { label: 'Unbekannt', class: 'badge-ghost' }
+  if (tags.includes('beschlossen')) return { label: 'Beschlossen', class: 'badge-success' }
+  if (tags.includes('eingereicht')) return { label: 'Eingereicht', class: 'badge-info' }
+  if (tags.includes('entwurf')) return { label: 'Entwurf', class: 'badge-warning' }
+  return { label: 'Unbekannt', class: 'badge-ghost' }
+}
+
+const status = getStatusBadge(antrag.data.tags)
+---
+
+<Splash frontmatter={{ title: antrag.data.title }}>
+  <div class="py-12">
+    <div class="mb-8">
+      <a href="/antraege" class="link link-primary">&larr; Alle Anträge</a>
+    </div>
+
+    <article class="prose prose-lg max-w-none">
+      <div class="not-prose flex items-center gap-4 mb-4">
+        <h1 class="text-4xl font-bold">{antrag.data.title}</h1>
+        <span class={`badge ${status.class}`}>{status.label}</span>
+      </div>
+
+      <div class="not-prose text-sm opacity-70 mb-6">
+        {formatDate(antrag.data.date)}
+      </div>
+
+      {antrag.data.draft && (
+        <div class="not-prose alert alert-warning mb-6">
+          <span>Entwurf - Feedback erbeten</span>
+        </div>
+      )}
+
+      <Content />
+    </article>
+  </div>
+</Splash>

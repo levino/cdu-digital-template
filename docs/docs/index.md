@@ -7,15 +7,13 @@ description: Internes Handbuch für den CDU Gemeindeverband
 
 Willkommen im internen Bereich des CDU Gemeindeverbands Musterstadt.
 
-Alle Dokumente können gemeinsam über GitHub bearbeitet werden - einfach Issue öffnen oder direkt editieren.
+Alle Dokumente können gemeinsam über GitHub bearbeitet werden - einfach Issue öffnen mit `@claude` oder direkt editieren.
 
 ## Dokumente
 
-- [Briefe](/docs/letters) – Offizielle Korrespondenz
-- [Protokolle](/docs/protokolle) – Sitzungsprotokolle
-- [Berichte](/docs/berichte) – Berichte aus Gremien
-- [Anträge](/docs/antraege) – Anträge und Beschlussvorlagen
-- [Strategie](/docs/strategie) – Strategiepapiere und Konzepte
+- [Briefe](/docs/letters) - Offizielle Korrespondenz
+- [Berichte](/berichte) - Berichte und Protokolle aus den Gremien
+- [Anträge](/antraege) - Anträge und Beschlussvorlagen
 
 ## Entwürfe
 

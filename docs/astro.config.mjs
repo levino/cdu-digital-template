@@ -14,8 +14,8 @@ export default defineConfig({
       navigation: {
         home: { label: 'Start', href: '/docs/index' },
         briefe: { label: 'Briefe', href: '/docs/letters' },
-        protokolle: { label: 'Protokolle', href: '/docs/protokolle' },
-        antraege: { label: 'Anträge', href: '/docs/antraege' },
+        berichte: { label: 'Berichte', href: '/berichte' },
+        antraege: { label: 'Anträge', href: '/antraege' },
       },
     }),
     shipyardDocs({
