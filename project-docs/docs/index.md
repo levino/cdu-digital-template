@@ -7,7 +7,9 @@ description: In 10 Minuten zur eigenen CDU-Website
 
 Du brauchst **keine** Programmierkenntnisse. Claude macht alles für dich.
 
-**Demo ansehen:** [demo-website.cdu-digital-template.levinkeller.de](https://demo-website.cdu-digital-template.levinkeller.de)
+**Demos ansehen:**
+- [Demo-Website](https://demo-website.cdu-digital-template.levinkeller.de) - So sieht die fertige Seite aus
+- [Demo-Dokumentation](https://demo-docs.cdu-digital-template.levinkeller.de) - Interne Docs (z.B. für Briefe)
 
 ## 1. Repository kopieren
 
@@ -69,10 +71,7 @@ Das Template ist für **Cloudflare Pages** vorbereitet:
 1. Geh auf [dash.cloudflare.com](https://dash.cloudflare.com)
 2. **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**
 3. Wähl dein Repository
-4. Build settings:
-   - Root directory: `website`
-   - Build command: `npm run build`
-   - Build output directory: `dist`
+4. Root directory auf `website` setzen
 5. Deploy
 
 Fertig! Deine Seite ist online.

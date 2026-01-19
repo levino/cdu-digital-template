@@ -12,7 +12,8 @@ export default defineConfig({
       title: 'Dokumentation',
       tagline: 'Website-Vorlage für CDU-Verbände',
       navigation: {
-        docs: { label: 'Loslegen', href: '/docs/index' },
+        start: { label: 'Loslegen', href: '/docs/index' },
+        features: { label: 'Features', href: '/docs/features' },
         examples: { label: 'Beispiele', href: '/docs/beispiele' },
       },
     }),

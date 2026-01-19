@@ -12,8 +12,10 @@ export default defineConfig({
       title: 'Dokumentation',
       tagline: 'Internes Handbuch für den Gemeindeverband',
       navigation: {
-        docs: { label: 'Dokumentation', href: '/docs/index' },
-        letters: { label: 'Briefe', href: '/docs/letters' },
+        home: { label: 'Start', href: '/docs/index' },
+        briefe: { label: 'Briefe', href: '/docs/letters' },
+        protokolle: { label: 'Protokolle', href: '/docs/protokolle' },
+        antraege: { label: 'Anträge', href: '/docs/antraege' },
       },
     }),
     shipyardDocs({
