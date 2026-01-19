@@ -34,13 +34,10 @@ Klicke auf **"Use this template"** oben rechts, um ein eigenes Repository zu ers
 Die Claude GitHub Action ist bereits vorkonfiguriert. Um sie zu nutzen:
 
 1. Du benötigst ein **Claude Pro/Max/Team Abo** (claude.ai)
-2. Erstelle einen OAuth Token unter [claude.ai/settings/api](https://claude.ai/settings/api)
-3. Füge den Token als Repository Secret hinzu:
-   - Repository → Settings → Secrets and variables → Actions
-   - "New repository secret" → Name: `CLAUDE_CODE_OAUTH_TOKEN` → Value: dein Token
-4. Merge den offenen PR "Add Claude Code GitHub Workflow"
+2. Öffne das Repository lokal mit [Claude Code](https://claude.ai/code)
+3. Führe `/install-github-app` aus – das richtet automatisch alles ein
 
-**Wichtig:** Ohne den Token funktioniert die GitHub Action nicht!
+**Wichtig:** Ohne Claude Pro/Max/Team Abo funktioniert die GitHub Action nicht!
 
 Danach kannst du in Issues oder PRs `@claude` erwähnen und Claude arbeitet direkt im Repository:
 
