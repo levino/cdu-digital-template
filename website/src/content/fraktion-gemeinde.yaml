@@ -1,11 +1,19 @@
 - id: "1"
-  person: max-mustermann
+  person: peter-hoffmann
   amt: Fraktionsvorsitzender
 
 - id: "2"
-  person: erika-musterfrau
+  person: sabine-fischer
   amt: Stellv. Fraktionsvorsitzende
 
 - id: "3"
   person: hans-schmidt
+  amt: Ratsmitglied
+
+- id: "4"
+  person: anna-klein
+  amt: Ratsmitglied
+
+- id: "5"
+  person: michael-braun
   amt: Ratsmitglied

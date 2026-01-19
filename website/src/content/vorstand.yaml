@@ -7,5 +7,9 @@
   amt: Stellv. Vorsitzende
 
 - id: "3"
-  person: hans-schmidt
+  person: thomas-mueller
   amt: Schatzmeister
+
+- id: "4"
+  person: maria-weber
+  amt: Schriftführerin

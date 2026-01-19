@@ -2,5 +2,5 @@
 firstName: Hans
 lastName: Schmidt
 email: hans.schmidt@cdu-musterstadt.de
-imageUrl: https://randomuser.me/api/portraits/men/67.jpg
+imageUrl: https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face
 ---

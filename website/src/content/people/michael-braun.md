@@ -1,0 +1,6 @@
+---
+firstName: Michael
+lastName: Braun
+email: michael.braun@cdu-musterstadt.de
+imageUrl: https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face
+---
