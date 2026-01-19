@@ -43,7 +43,15 @@ Folge den Anweisungen. Das gibt Claude die Berechtigung, auf Issues zu reagieren
 
 ## 4. Verband anpassen
 
-Jetzt öffne einfach ein **GitHub Issue** in deinem Repository und schreib sowas wie:
+**CLI-User:** Starte einfach den Setup-Agent:
+
+```
+/setup
+```
+
+Der fragt alles Nötige ab und passt die Seite automatisch an.
+
+**Oder** öffne ein **GitHub Issue** in deinem Repository und schreib sowas wie:
 
 > @claude pass die seite für uns an. wir sind der CDU ortsverband neustadt.
 >

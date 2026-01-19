@@ -10,4 +10,5 @@ Website und Dokumentation für den CDU Gemeindeverband Musterstadt.
 
 ## Agents
 
+- `setup` - Richtet das Template interaktiv für einen neuen Verband ein
 - `briefeschreiber` - Erstellt offizielle Briefe im CDU Design
