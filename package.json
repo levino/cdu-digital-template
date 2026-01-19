@@ -6,6 +6,7 @@
   "workspaces": [
     "website",
     "docs",
+    "project-docs",
     "briefvorlagen"
   ],
   "license": "UNLICENSED",

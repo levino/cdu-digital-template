@@ -4,16 +4,16 @@ import shipyardDocs from '@levino/shipyard-docs'
 import { defineConfig } from 'astro/config'
 
 export default defineConfig({
-  site: 'https://demo-docs.cdu-digital-template.levinkeller.de',
+  site: 'https://cdu-digital-template.levinkeller.de',
   integrations: [
     tailwind({ applyBaseStyles: false }),
     shipyard({
-      brand: 'CDU Musterstadt',
+      brand: 'CDU Digital Template',
       title: 'Dokumentation',
-      tagline: 'Internes Handbuch für den Gemeindeverband',
+      tagline: 'Website-Vorlage für CDU-Verbände',
       navigation: {
-        docs: { label: 'Dokumentation', href: '/docs/index' },
-        letters: { label: 'Briefe', href: '/docs/letters' },
+        docs: { label: 'Loslegen', href: '/docs/index' },
+        examples: { label: 'Beispiele', href: '/docs/beispiele' },
       },
     }),
     shipyardDocs({

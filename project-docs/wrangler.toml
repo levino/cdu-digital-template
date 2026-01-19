@@ -1,0 +1,8 @@
+name = "cdu-digital-template-docs"
+compatibility_date = "2026-01-19"
+
+[build]
+command = "npm run build"
+
+[assets]
+directory = "dist"
