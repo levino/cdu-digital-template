@@ -15,33 +15,23 @@ Geh auf [github.com/levino/cdu-digital-template](https://github.com/levino/cdu-d
 
 Gib deinem Repository einen Namen (z.B. `cdu-neustadt-website`) und klick auf **Create repository**.
 
-## 2. Claude Code installieren
+## 2. GitHub App installieren
 
-Öffne ein Terminal und installiere Claude Code:
+Installiere Claude Code falls noch nicht vorhanden:
 
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
 
-Dann starte Claude Code in deinem geforkten Repository:
+Dann installiere die GitHub App:
 
 ```bash
-git clone https://github.com/DEIN-USERNAME/cdu-digital-template.git
-cd cdu-digital-template
-claude
-```
-
-## 3. GitHub App installieren
-
-Im Claude Code Terminal:
-
-```
-/install-github-app
+claude /install-github-app
 ```
 
 Folge den Anweisungen. Das gibt Claude die Berechtigung, auf Issues zu reagieren und Pull Requests zu erstellen.
 
-## 4. Verband anpassen
+## 3. Verband anpassen
 
 **CLI-User:** Starte einfach den Setup-Agent:
 
@@ -65,7 +55,7 @@ Der fragt alles Nötige ab und passt die Seite automatisch an.
 
 Claude macht einen Pull Request mit allen Änderungen. Du musst nur noch mergen.
 
-## 5. Bilder hinzufügen
+## 4. Bilder hinzufügen
 
 Für Personenfotos: Lad die Bilder irgendwo hoch (Google Drive mit öffentlichem Link, Dropbox, eigener Webspace) und gib Claude die URLs:
 
@@ -76,7 +66,7 @@ Für Personenfotos: Lad die Bilder irgendwo hoch (Google Drive mit öffentlichem
 
 Claude lädt sie runter und fügt sie ein.
 
-## 6. Online stellen
+## 5. Online stellen
 
 Das Template ist für **Cloudflare Pages** vorbereitet:
 
@@ -95,7 +85,7 @@ Fertig! Deine Seite ist online.
 Der `docs/` Ordner enthält eine interne Dokumentation (z.B. für Briefe). Kann man ignorieren oder später einrichten - nur für Fortgeschrittene.
 :::
 
-## 7. Aufräumen
+## 6. Aufräumen
 
 Die `project-docs/` brauchst du nicht - das ist nur die Anleitung die du gerade liest. Sag Claude:
 
