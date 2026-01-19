@@ -66,10 +66,8 @@ Claude lädt sie runter und fügt sie ein.
 
 ## 5. Online stellen
 
-Das Template ist für **Cloudflare Pages** vorbereitet:
-
 1. Geh auf [dash.cloudflare.com](https://dash.cloudflare.com)
-2. **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**
+2. **Workers & Pages** → **Create application** → **Connect to Git**
 3. Wähl dein Repository
 4. Root directory auf `website` setzen
 5. Deploy
